@@ -1,1 +1,1 @@
-# cv-tailor
+# CV Tailor
