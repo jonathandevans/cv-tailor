@@ -1,20 +1,14 @@
-"use client";
+"use client"
 
 import { Button } from "@/components/ui/button";
-import { useAuthActions } from "@convex-dev/auth/react";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function DashboardRoute() {
-  const { signOut } = useAuthActions();
-
-  return (
-    <>
-      <Button
-        onClick={() => {
-          signOut();
-        }}
-      >
-        Sign out
-      </Button>
-    </>
-  );
+  return <main>
+    <Button onClick={async () => {
+      await authClient.signOut()
+      redirect("/")
+    }}>Sign out</Button>
+  </main>
 }

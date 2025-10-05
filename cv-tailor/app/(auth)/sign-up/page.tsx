@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { generateMetadata } from "@/lib/metadata";
-import { SignUpForm } from "@/app/(auth)/sign-up-form";
+import { SignUpForm } from "../sign-up-form";
 
 export const metadata: Metadata = generateMetadata({ title: "Sign Up" });
 

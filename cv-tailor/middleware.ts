@@ -1,22 +1,14 @@
-import {
-  convexAuthNextjsMiddleware,
-  createRouteMatcher,
-  nextjsMiddlewareRedirect,
-} from "@convex-dev/auth/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
-const isAuthRoute = createRouteMatcher(["/sign-in", "/sign-up"]);
-
-export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
-  if (isAuthRoute(request) && (await convexAuth.isAuthenticated())) {
-    return nextjsMiddlewareRedirect(request, "/dashboard");
+export async function middleware(request: NextRequest) {
+  const cookies = getSessionCookie(request);
+  if (!cookies) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
-
-  if (isProtectedRoute(request) && !(await convexAuth.isAuthenticated())) {
-    return nextjsMiddlewareRedirect(request, "/sign-in");
-  }
-});
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/dashboard"],
 };
