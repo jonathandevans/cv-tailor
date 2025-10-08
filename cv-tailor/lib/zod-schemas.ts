@@ -50,3 +50,10 @@ export const resetPasswordSchema = z
     error: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const createCVSchema = z.object({
+  name: z.string({
+    error: (iss) =>
+      iss.input === undefined ? "Name is required" : "Invalid name",
+  }),
+});

@@ -18,6 +18,7 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  CV            CV[]
 
   @@unique([email])
   @@map("user")
@@ -66,4 +67,89 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model CV {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  summary     Summary?
+  experiences Experience[]
+  eduction    Eduction[]
+  skills      Skill[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Summary {
+  id   String @id @default(uuid())
+  cvId String @unique
+
+  fullName           String?
+  email              String?
+  displayEmail       Boolean @default(true)
+  phoneNumber        String?
+  displayPhoneNumber Boolean @default(true)
+  linkedIn           String?
+  displayLinkedIn    Boolean @default(false)
+  website            String?
+  displayWebsite     Boolean @default(false)
+  location           String?
+  displayLocation    Boolean @default(false)
+  summary            String?
+  displaySummary     Boolean @default(true)
+
+  CV CV @relation(fields: [cvId], references: [id], onDelete: Cascade)
+}
+
+model Experience {
+  id   String @id @default(uuid())
+  cvId String
+
+  title              String?
+  displayTitle       Boolean   @default(true)
+  company            String?
+  displayCompany     Boolean   @default(true)
+  startDate          DateTime?
+  endDate            DateTime?
+  current            Boolean   @default(false)
+  displayDate        Boolean   @default(true)
+  description        String?
+  displayDescription Boolean   @default(true)
+
+  CV CV @relation(fields: [cvId], references: [id], onDelete: Cascade)
+}
+
+model Eduction {
+  id   String @id @default(uuid())
+  cvId String
+
+  title              String?
+  displayTitle       Boolean   @default(true)
+  institute          String?
+  displayInstitute   Boolean   @default(true)
+  location           String?
+  displayLocation    Boolean   @default(true)
+  endDate            DateTime?
+  current            Boolean   @default(false)
+  displayEndDate     Boolean   @default(true)
+  results            String?
+  displayResults     Boolean   @default(true)
+  description        String?
+  displayDescription Boolean   @default(true)
+
+  CV CV @relation(fields: [cvId], references: [id], onDelete: Cascade)
+}
+
+model Skill {
+  id   String @id @default(uuid())
+  cvId String
+
+  description        String?
+  displayDescription Boolean @default(true)
+
+  CV CV @relation(fields: [cvId], references: [id], onDelete: Cascade)
 }

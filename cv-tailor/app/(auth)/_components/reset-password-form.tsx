@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { Loader2 } from "lucide-react";
-import { resetPasswordSchema, signUpSchema } from "@/lib/zod-schemas";
+import { resetPasswordSchema } from "@/lib/zod-schemas";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,7 +20,6 @@ import Link from "next/link";
 import {
   notFound,
   redirect,
-  useParams,
   useSearchParams,
 } from "next/navigation";
 import { toast } from "sonner";

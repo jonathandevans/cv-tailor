@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { generateMetadata } from "@/lib/metadata";
-import { SignInForm } from "../sign-in-form";
+import { SignInForm } from "../_components/sign-in-form";
 
 export const metadata: Metadata = generateMetadata({ title: "Sign In" });
 
